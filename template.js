@@ -1,12 +1,3 @@
-const FONT_MAP = {
-  Arial: { google: "Roboto", fallback: "sans-serif" },
-  Helvetica: { google: "Roboto", fallback: "sans-serif" },
-  Verdana: { google: "Open+Sans", fallback: "sans-serif" },
-  Georgia: { google: "Merriweather", fallback: "serif" },
-  "Times New Roman": { google: "Playfair+Display", fallback: "serif" },
-  "Courier New": { google: "Roboto+Mono", fallback: "monospace" },
-};
-
 function getBorderRadius(template) {
   switch (template) {
     case "circle":
@@ -41,8 +32,8 @@ function buildTemplate(config, totalSecs, units, width, height) {
   const isDigits = template === "square-digits";
   const borderRadius = getBorderRadius(template);
 
-  const fontInfo = FONT_MAP[font] || FONT_MAP["Arial"];
-  const fontFamily = `'${fontInfo.google.replace(/\+/g, " ")}', ${fontInfo.fallback}`;
+  // Use system fonts directly -- Puppeteer's Chromium has these built in
+  const fontFamily = `'${font}', sans-serif`;
 
   const days = Math.floor(totalSecs / 86400);
   const hours = Math.floor((totalSecs % 86400) / 3600);
@@ -55,7 +46,6 @@ function buildTemplate(config, totalSecs, units, width, height) {
   values.push(minutes);
   values.push(seconds);
 
-  // Determine colors based on template variant
   const digitColor = isDigits || isBorder ? boxColor : textColor;
   const insideLabelColor = isBorder ? boxColor : textColor;
   const boxBg = isDigits ? "transparent" : isBorder ? "transparent" : boxColor;
@@ -101,12 +91,11 @@ function buildTemplate(config, totalSecs, units, width, height) {
 <html>
 <head>
   <meta charset="utf-8">
-  <link href="https://fonts.googleapis.com/css2?family=${fontInfo.google}:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      width: ${width}px; 
-      height: ${height}px; 
+    body {
+      width: ${width}px;
+      height: ${height}px;
       overflow: hidden;
       background-color: ${bgColor};
       display: flex;
