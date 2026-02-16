@@ -74,7 +74,7 @@ function buildTemplate(config, totalSecs, units, width, height) {
           border-radius:${borderRadius};
         ">
           <span class="unit-value" style="
-            font-size:30px;font-weight:700;
+            font-size:36px;font-weight:700;
             font-variant-numeric:tabular-nums;
             color:${digitColor};
             font-family:${fontFamily};
