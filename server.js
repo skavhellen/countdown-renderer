@@ -50,11 +50,11 @@ app.post("/generate-gif", async (req, res) => {
     const page = await b.newPage();
 
     // Build units list
-    const units = [];
-    if (config.display_days) units.push("Days");
-    if (config.display_hours) units.push("Hours");
-    units.push("Minutes");
-    units.push("Seconds");
+   const units = [];
+    if (config.display_days) units.push(config.label_days || "Days");
+    if (config.display_hours) units.push(config.label_hours || "Hours");
+    units.push(config.label_minutes || "Minutes");
+    units.push(config.label_seconds || "Seconds");
 
     // Calculate dimensions based on number of units
     const boxSize = 80;
@@ -65,7 +65,7 @@ app.post("/generate-gif", async (req, res) => {
     const width = contentWidth + padding;
     const height = insideVariant ? boxSize + padding : boxSize + 30 + padding;
 
-    await page.setViewport({ width, height, deviceScaleFactor: 1 });
+    await page.setViewport({ width, height, deviceScaleFactor: 2 });
 
     // Generate first frame HTML
     const totalSecsStart = Math.floor(Math.max(0, diffMs) / 1000);
@@ -117,7 +117,7 @@ app.post("/generate-gif", async (req, res) => {
     const encoder = new GIFEncoder(gifWidth, gifHeight);
     encoder.setDelay(1000);
     encoder.setRepeat(0); // infinite loop
-    encoder.setQuality(10);
+    encoder.setQuality(1);
     encoder.start();
 
     for (const frameBuf of frames) {
