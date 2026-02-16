@@ -57,15 +57,15 @@ app.post("/generate-gif", async (req, res) => {
     units.push(config.label_seconds || "Seconds");
 
     // Calculate dimensions based on number of units
-    const boxSize = 80;
-    const gap = 12;
-    const padding = 48;
+    const boxSize = 100;
+    const gap = 16;
+    const padding = 40;
     const insideVariant = (config.template || "").includes("inside");
     const contentWidth = units.length * boxSize + (units.length - 1) * gap;
     const width = contentWidth + padding;
     const height = insideVariant ? boxSize + padding : boxSize + 30 + padding;
 
-    await page.setViewport({ width, height, deviceScaleFactor: 2 });
+    await page.setViewport({ width, height, deviceScaleFactor: 1 });
 
     // Generate first frame HTML
     const totalSecsStart = Math.floor(Math.max(0, diffMs) / 1000);
